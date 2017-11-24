@@ -1,10 +1,8 @@
 const express = require('express');
 
 class Server {
-
   // start a server, store logging block for later
   // - parameter logBlock lambda (String)=>Void
-
   constructor(port, logBlock) {
     this.logger = logBlock;
 
@@ -17,7 +15,6 @@ class Server {
   // if response is an array, add dynamic path to fetch single objects by id
   // - parameter path url API path like 'users' or 'dogs'
   // - parameter json array or object to respond to requests
-
   addPath(path, json) {
     this.app.get('/'+path, (request, response) => {
       this.logger({time: (new Date()).toUTCString(), status: 200, url: request.originalUrl});
