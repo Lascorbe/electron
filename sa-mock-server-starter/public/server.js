@@ -27,8 +27,17 @@ class Server {
     if (!Array.isArray(json)) return;
     
     this.app.get('/'+path+'/:id', (request, response) => {
-      const found = json.filter((item) => item.id == request.params.id)
-      //TODO: return the response or error
+      const userId = request.params.id
+      const found = json.filter((item) => item.id == userId)
+      let status
+      if (found.length > 0) {
+        status = 200
+        response.json(found[0]);
+      } else {
+        status = 404
+        response.status(status).send(`'Sorry, we cannot find user with id "${userId}"!'`);
+      }
+      this.logger({time: (new Date()).toUTCString(), status: status, url: request.originalUrl});
     });
   }
 }
