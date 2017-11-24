@@ -40,10 +40,15 @@ class MainWindow extends Component {
     });
   }
 
+  openUrl() {
+    electron.shell.openExternal(this.state.url)
+  }
+
   render() {
     return (
     <div>
-      <header className="mw-header">{this.state.log.length} Requests on: <span className="mw-header-link">{this.state.url}</span>
+      <header className="mw-header">
+        {this.state.log.length} Requests on: <span className="mw-header-link" onClick={() => this.openUrl()}>{this.state.url}</span>
       </header>
       <div className="mw-table-container">
       <Table className="mw-log-table" striped bordered condensed hover responsive>
