@@ -55,3 +55,10 @@ let srv = new Server(serverPort, (logEntry) => {
   mainWindow.webContents.send('log', logEntry);
 });
 srv.addPath('users', [{id: 1, name: 'John'}, {id: 2, name: 'Peter'}]);
+
+//
+//  Listen to put the url
+//
+ipcMain.on('get-server-address', (event)=>{
+  event.sender.send('server-address', 'http://localhost:'+serverPort)
+})

@@ -31,12 +31,19 @@ class MainWindow extends Component {
         log: newLog
       }))
     });
+    // listen for 'server-address' events from main process
+    ipcRenderer.on('server-address', (event, entry) => {
+      const urlAddress = entry
+      this.setState(Object.assign({}, this.state, {
+        url: urlAddress
+      }))
+    });
   }
 
   render() {
     return (
     <div>
-      <header className="mw-header">{this.state.log.length} Requests
+      <header className="mw-header">{this.state.log.length} Requests on: <span className="mw-header-link">{this.state.url}</span>
       </header>
       <div className="mw-table-container">
       <Table className="mw-log-table" striped bordered condensed hover responsive>
@@ -60,6 +67,10 @@ class MainWindow extends Component {
       </div>
     </div>
     );
+  }
+
+  componentDidMount() {
+    ipcRenderer.send('get-server-address');
   }
 }
 
